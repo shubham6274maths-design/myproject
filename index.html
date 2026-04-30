@@ -98,7 +98,7 @@ button:hover {
     </div>
     <div id="mainContent">
       <h1 id="typing"></h1>
-      <div id="message1" class="msg" style="display:block;">
+      <div id="message1" class="msg" >
         <h1>Jennie… do you remember how it all started?</h1>
         <p>Do you remember when we first talked? 😭
 I know we don’t remember the exact date, but honestly… it doesn’t even matter. It was somewhere around the last week of April, around this same time… when everything began, my kiddo 💗😭😘
@@ -510,23 +510,30 @@ Something I truly value ❤️</p>
   <script>
     let noBtn = document.getElementById("noBtn");
 
+let noBtn = document.getElementById("noBtn");
+
 function moveNoBtn() {
-  let x = Math.random() * (window.innerWidth - 120);
-  let y = Math.random() * (window.innerHeight - 60);
+  let x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  let y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
 }
 
-// works on hover + click (mobile too)
-noBtn.addEventListener("mouseover", moveNoBtn);
-noBtn.addEventListener("click", moveNoBtn);
+// trigger on BOTH hover + click + touch
+noBtn.addEventListener("mouseenter", moveNoBtn);
+noBtn.addEventListener("mousedown", moveNoBtn);
+noBtn.addEventListener("touchstart", moveNoBtn);
 
     function startStory() {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("mainContent").style.display = "block";
-      typeWriter();
-      let music = document.getElementById("bgMusic");
-      music.play();
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+
+  // show first message ONLY after clicking
+  document.getElementById("message1").style.display = "block";
+
+  typeWriter();
+  document.getElementById("bgMusic").play();
     }
 
     let text = "Hey Jennie ❤️";
