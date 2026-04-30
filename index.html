@@ -599,16 +599,26 @@ function next() {
     nextMsg.style.display = "block";
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    // ❌ hide typing on last message
-    if (!document.getElementById("message" + (current + 1))) {
-      document.getElementById("typing").style.display = "none";
-    }
+  } else if (current === 6) {  // 👈 VERY IMPORTANT
+    // show final page after last message
+    document.getElementById("finalPage").style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-  } else {
+    // hide typing
+    document.getElementById("typing").style.display = "none";
+
+    // animate images
+    let imgs = document.querySelectorAll(".gallery img");
+    imgs.forEach((img, i) => {
+      setTimeout(() => {
+        img.classList.add("show");
+      }, i * 400);
+    });
+
+    // hide buttons
     document.querySelector(".buttons").style.display = "none";
   }
 }
-
 
     setInterval(() => {
       let heart = document.createElement("div");
