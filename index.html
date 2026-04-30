@@ -509,12 +509,17 @@ Something I truly value ❤️</p>
 
   <script>
     let noBtn = document.getElementById("noBtn");
-    noBtn.addEventListener("mouseover", () => {
-      let x = Math.random() * (window.innerWidth - 100);
-      let y = Math.random() * (window.innerHeight - 50);
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-    });
+
+function moveNoBtn() {
+  let x = Math.random() * (window.innerWidth - 120);
+  let y = Math.random() * (window.innerHeight - 60);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+
+// works on hover + click (mobile too)
+noBtn.addEventListener("mouseover", moveNoBtn);
+noBtn.addEventListener("click", moveNoBtn);
 
     function startStory() {
       document.getElementById("intro").style.display = "none";
