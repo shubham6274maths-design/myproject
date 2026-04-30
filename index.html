@@ -14,7 +14,15 @@
   width: 90%;
   max-width: 320px;
   border-radius: 15px;
-  opacity: 1; /* 👈 FORCE visible first */
+
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.8s ease;
+}
+
+.gallery img.show {
+  opacity: 1;
+  transform: translateY(0);
 }
     body {
   margin: 0;
@@ -613,12 +621,18 @@ function next() {
   if (nextMsg) {
     nextMsg.style.display = "block";
   } else {
-    // FINAL PAGE SHOW
-    document.getElementById("finalPage").style.display = "block";
-    document.querySelector(".buttons").style.display = "none";
-    document.getElementById("typing").style.display = "none";
-  }
+  document.getElementById("finalPage").style.display = "block";
+  document.querySelector(".buttons").style.display = "none";
+  document.getElementById("typing").style.display = "none";
 
+  // 🔥 animate images one by one
+  let imgs = document.querySelectorAll(".gallery img");
+  imgs.forEach((img, i) => {
+    setTimeout(() => {
+      img.classList.add("show");
+    }, i * 500);
+  });
+}
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
