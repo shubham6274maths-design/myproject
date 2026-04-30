@@ -4,35 +4,89 @@
   <title>For Jennie ❤️</title>
   <style>
     body {
-      margin: 0;
-      background: linear-gradient(to bottom, #000000, #1a1a1a);
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-y: auto;
-    #message5 {
+  margin: 0;
+  background: linear-gradient(to bottom, #000000, #1a1a1a);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* container spacing improved */
+.container {
+  text-align: center;
+  max-width: 600px;
+  padding: 30px;
+  width: 100%;
+}
+
+/* messages */
+.msg {
+  display: none;
+  font-size: 18px;
+  line-height: 1.6;
+  animation: fadeIn 0.8s ease;
+}
+
+/* ONLY message5 scrollable */
+#message5 {
   max-height: 80vh;
   overflow-y: auto;
   padding-right: 10px;
-        
-    }
-    .container { text-align: center; max-width: 600px; padding: 30px; }
-    #mainContent { display: none; }
-    h1 { font-size: 32px; }
-    .msg { display: none; font-size: 18px; line-height: 1.6; animation: fadeIn 1s ease; }
-    button {
-      padding: 12px 25px; font-size: 16px; background: #ff6b81;
-      border: none; border-radius: 25px; color: white; cursor: pointer;
-      margin: 10px; transition: 0.3s; position: relative;
-    }
-    button:hover { background: #ff4757; transform: scale(1.05); }
-    #noBtn { position: absolute; }
-    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-    .heart { position: absolute; color: #ff6b81; animation: float 6s linear infinite; }
-    @keyframes float { 0% { transform: translateY(100vh); } 100% { transform: translateY(-10vh); opacity: 0; } }
+}
+
+/* buttons */
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  background: #ff6b81;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+  position: relative;
+}
+
+button:hover {
+  background: #ff4757;
+  transform: scale(1.05);
+}
+
+/* FIXED no button */
+#noBtn {
+  position: fixed; /* important */
+}
+
+/* smooth fade */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* ❤️ hearts FIXED */
+.heart {
+  position: fixed;
+  bottom: -10px;
+  color: #ff6b81;
+  animation: float 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
   </style>
 </head>
 <body>
