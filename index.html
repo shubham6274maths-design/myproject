@@ -385,15 +385,22 @@ I love you so much, my jaan 💗</p>
     }
 
     let current = 1;
-    function next() {
-      document.getElementById("message" + current).style.display = "none";
-      current++;
-      let nextMsg = document.getElementById("message" + current);
-      if (nextMsg) {
-        nextMsg.style.display = "block";
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    }
+
+function next() {
+  let currentMsg = document.getElementById("message" + current);
+  let nextMsg = document.getElementById("message" + (current + 1));
+
+  if (currentMsg) currentMsg.style.display = "none";
+
+  if (nextMsg) {
+    current++;
+    nextMsg.style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    // No more messages → hide button
+    document.querySelector(".buttons").style.display = "none";
+  }
+}
 
     setInterval(() => {
       let heart = document.createElement("div");
