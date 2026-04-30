@@ -537,7 +537,19 @@ noBtn.addEventListener("touchstart", moveNoBtn);
   document.getElementById("mainContent").style.display = "block";
 
   document.getElementById("message1").style.display = "block";
-      typeWriter();
+
+  typeWriter();
+
+  let music = document.getElementById("bgMusic");
+
+  // FORCE play properly
+  music.muted = false;
+  music.play().catch(() => {
+    // if blocked, try again on next click
+    document.body.addEventListener("click", () => {
+      music.play();
+    }, { once: true });
+  });
     }
 
     let text = "Hey Jennie ❤️";
