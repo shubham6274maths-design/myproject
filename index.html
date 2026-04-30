@@ -13,6 +13,13 @@
   align-items: center;
   min-height: 100vh;
   overflow-y: auto;
+} /* ✅ CLOSE BODY PROPERLY */
+
+/* now this is OUTSIDE */
+#message5 {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
 /* container spacing improved */
@@ -529,11 +536,7 @@ noBtn.addEventListener("touchstart", moveNoBtn);
   document.getElementById("intro").style.display = "none";
   document.getElementById("mainContent").style.display = "block";
 
-  // show first message ONLY after clicking
   document.getElementById("message1").style.display = "block";
-
-  typeWriter();
-  document.getElementById("bgMusic").play();
     }
 
     let text = "Hey Jennie ❤️";
