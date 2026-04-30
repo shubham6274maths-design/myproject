@@ -6,23 +6,15 @@
     .gallery {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   align-items: center;
-  margin-top: 20px;
+  gap: 20px;
 }
 
 .gallery img {
   width: 90%;
-  max-width: 300px;
-  border-radius: 20px;
-  opacity: 0;
-  transform: translateY(50px);
-  transition: all 0.8s ease;
-}
-
-.gallery img.show {
-  opacity: 1;
-  transform: translateY(0);
+  max-width: 320px;
+  border-radius: 15px;
+  opacity: 1; /* 👈 FORCE visible first */
 }
     body {
   margin: 0;
@@ -611,33 +603,23 @@ noBtn.addEventListener("touchstart", moveNoBtn);
     let current = 1;
 function next() {
   let currentMsg = document.getElementById("message" + current);
-  let nextMsg = document.getElementById("message" + (current + 1));
 
   if (currentMsg) currentMsg.style.display = "none";
 
+  current++;
+
+  let nextMsg = document.getElementById("message" + current);
+
   if (nextMsg) {
-    current++;
     nextMsg.style.display = "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
   } else {
-    // SHOW FINAL PAGE
+    // FINAL PAGE SHOW
     document.getElementById("finalPage").style.display = "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    document.getElementById("typing").style.display = "none";
-
-    // animate images
-    let imgs = document.querySelectorAll(".gallery img");
-    imgs.forEach((img, i) => {
-      setTimeout(() => {
-        img.classList.add("show");
-      }, i * 400);
-    });
-
-    // hide buttons
     document.querySelector(".buttons").style.display = "none";
+    document.getElementById("typing").style.display = "none";
   }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
     setInterval(() => {
