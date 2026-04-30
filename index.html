@@ -21,7 +21,7 @@
   overflow-y: auto;
   padding-right: 10px;
 }
-
+#mainContent { display: none; }
 /* container spacing improved */
 .container {
   text-align: center;
@@ -517,7 +517,7 @@ Something I truly value ❤️</p>
   <script>
     let noBtn = document.getElementById("noBtn");
 
-let noBtn = document.getElementById("noBtn");
+
 
 function moveNoBtn() {
   let x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
@@ -537,6 +537,7 @@ noBtn.addEventListener("touchstart", moveNoBtn);
   document.getElementById("mainContent").style.display = "block";
 
   document.getElementById("message1").style.display = "block";
+      typeWriter();
     }
 
     let text = "Hey Jennie ❤️";
