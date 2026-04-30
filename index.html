@@ -503,9 +503,9 @@ Something I truly value ❤️</p>
     </div>
 
       <div class="buttons">
-        <button onclick="next()">Next ❤️</button>
+  <button onclick="prev()">⬅️ Previous</button>
+  <button onclick="next()">Next ❤️</button>
       </div>
-    </div>
   </div>
 
   <!-- AUDIO -->
@@ -515,6 +515,22 @@ Something I truly value ❤️</p>
   </audio>
 
   <script>
+    function prev() {
+  if (current > 1) {
+    let currentMsg = document.getElementById("message" + current);
+    currentMsg.style.display = "none";
+
+    current--;
+
+    let prevMsg = document.getElementById("message" + current);
+    prevMsg.style.display = "block";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // show typing again if going back
+    document.getElementById("typing").style.display = "block";
+  }
+}
     let noBtn = document.getElementById("noBtn");
 
 
@@ -563,7 +579,6 @@ noBtn.addEventListener("touchstart", moveNoBtn);
     }
 
     let current = 1;
-
 function next() {
   let currentMsg = document.getElementById("message" + current);
   let nextMsg = document.getElementById("message" + (current + 1));
@@ -574,11 +589,17 @@ function next() {
     current++;
     nextMsg.style.display = "block";
     window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // ❌ hide typing on last message
+    if (!document.getElementById("message" + (current + 1))) {
+      document.getElementById("typing").style.display = "none";
+    }
+
   } else {
-    // No more messages → hide button
     document.querySelector(".buttons").style.display = "none";
   }
 }
+
 
     setInterval(() => {
       let heart = document.createElement("div");
