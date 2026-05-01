@@ -3,6 +3,19 @@
 <head>
   <title>For Jennie ❤️</title>
   <style>
+    #pausePage, #endingPage {
+  text-align: center;
+  padding: 40px;
+}
+
+#endingPage button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border-radius: 25px;
+  background: #ff6b81;
+  color: white;
+  border: none;
+}
     /* FULL SCREEN SLIDESHOW */
 .slideshow {
   position: fixed;
@@ -589,6 +602,10 @@ You’re my choice.
 My peace.
 Something I truly value ❤️</p>
     </div>
+      <div id="pausePage" class="msg">
+  <h1>And after everything…</h1>
+  <p>I still choose you. Every single time ❤️</p>
+</div>
       <div id="finalPage" class="msg final">
 
   <div class="slideshow">
@@ -604,7 +621,10 @@ Something I truly value ❤️</p>
     <div class="slide" style="background-image: url('Snapchat-313158135.jpg');">
       <div class="overlay">My beautiful angel… you're perfect in every way 🫂</div>
     </div>
-
+<div id="endingPage" class="msg">
+  <h1>So… will you stay with me? 💗</h1>
+  <button onclick="finalYes()">Yes ❤️</button>
+</div>
   </div>
 
       </div>
@@ -684,11 +704,10 @@ noBtn.addEventListener("touchstart", moveNoBtn);
         setTimeout(typeWriter, 80);
       }
     }
+let current = 1;
 
-    let current = 1;
 function next() {
   let currentMsg = document.getElementById("message" + current);
-
   if (currentMsg) currentMsg.style.display = "none";
 
   current++;
@@ -697,23 +716,33 @@ function next() {
 
   if (nextMsg) {
     nextMsg.style.display = "block";
-    startSlideshow();
-  } else {
-  document.getElementById("finalPage").style.display = "block";
-  document.querySelector(".buttons").style.display = "none";
-  document.getElementById("typing").style.display = "none";
+  }
 
-  // 🔥 animate images one by one
-  let imgs = document.querySelectorAll(".gallery img");
-  imgs.forEach((img, i) => {
-    setTimeout(() => {
-      img.classList.add("show");
-    }, i * 500);
-  });
-}
+  // 👉 After last message (message6)
+  else if (current === 7) {
+    document.getElementById("pausePage").style.display = "block";
+  }
+
+  // 👉 After pause → show slideshow
+  else if (current === 8) {
+    document.getElementById("pausePage").style.display = "none";
+    document.getElementById("finalPage").style.display = "block";
+    startSlideshow();
+  }
+
+  // 👉 After slideshow → show ending
+  else if (current === 9) {
+    document.getElementById("finalPage").style.display = "none";
+    document.getElementById("endingPage").style.display = "block";
+  }
+
+  else {
+    document.querySelector(".buttons").style.display = "none";
+  }
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
+    
     setInterval(() => {
       let heart = document.createElement("div");
       heart.className = "heart";
@@ -741,6 +770,10 @@ function showSlides() {
 function startSlideshow() {
   slideIndex = 0;
   showSlides();
+}
+    function finalYes() {
+  document.getElementById("endingPage").innerHTML =
+    "<h1>I knew it… ❤️</h1><p>I’m the luckiest person alive.</p>";
 }
   </script>
 </body>
