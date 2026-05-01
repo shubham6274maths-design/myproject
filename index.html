@@ -665,16 +665,15 @@ noBtn.addEventListener("touchstart", moveNoBtn);
 
   let music = document.getElementById("bgMusic");
 
-  // FORCE play properly
-  music.muted = false;
-  music.play().catch(() => {
-    // if blocked, try again on next click
-    document.body.addEventListener("click", () => {
-      music.play();
-    }, { once: true });
-  });
-    }
+// 🔉 SET VOLUME HERE
+music.volume = 0.25; // 0.0 (mute) → 1.0 (full)
 
+music.muted = false;
+music.play().catch(() => {
+  document.body.addEventListener("click", () => {
+    music.play();
+  }, { once: true });
+});
     let text = "Hey Jennie ❤️";
     let i = 0;
     function typeWriter() {
