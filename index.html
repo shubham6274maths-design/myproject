@@ -4,11 +4,12 @@
   <title>For Jennie ❤️</title>
   <style>
     .buttons {
+  display: none; /* hidden initially */
   position: fixed;
   bottom: 20px;
   width: 100%;
   text-align: center;
-}
+    }
     #pausePage, #endingPage {
   text-align: center;
   padding: 40px;
@@ -653,17 +654,23 @@ Something I truly value ❤️</p>
 
   <script>
     function prev() {
-  if (current > 1) {
-    let currentMsg = document.getElementById("message" + current);
-    currentMsg.style.display = "none";
+  if (current <= 1) return;
 
-    current--;
+  document.querySelectorAll(".msg").forEach(el => el.style.display = "none");
 
-    let prevMsg = document.getElementById("message" + current);
-    prevMsg.style.display = "block";
+  current--;
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  if (current <= 6) {
+    document.getElementById("message" + current).style.display = "block";
+    document.querySelector(".buttons").style.display = "block";
+  } 
+  else if (current === 7) {
+    document.getElementById("pausePage").style.display = "block";
+    document.querySelector(".buttons").style.display = "block";
+  }
 
+  window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     // show typing again if going back
     document.getElementById("typing").style.display = "block";
   }
@@ -691,14 +698,13 @@ noBtn.addEventListener("touchstart", moveNoBtn);
 
   document.getElementById("message1").style.display = "block";
 
+  document.querySelector(".buttons").style.display = "block"; // ✅ show here
+
   typeWriter();
 
   let music = document.getElementById("bgMusic");
-
-  // FORCE play properly
   music.muted = false;
   music.play().catch(() => {
-    // if blocked, try again on next click
     document.body.addEventListener("click", () => {
       music.play();
     }, { once: true });
@@ -723,30 +729,29 @@ function next() {
 
   current++;
 
-  // 👉 SHOW buttons by default
-  document.querySelector(".buttons").style.display = "block";
-
   if (current <= 6) {
     document.getElementById("message" + current).style.display = "block";
+    document.querySelector(".buttons").style.display = "block"; // ✅ visible
   } 
   else if (current === 7) {
     document.getElementById("pausePage").style.display = "block";
+    document.querySelector(".buttons").style.display = "block"; // ✅ still visible
   } 
   else if (current === 8) {
     document.getElementById("finalPage").style.display = "block";
-    document.querySelector(".buttons").style.display = "none"; // ❗ hide here
+    document.querySelector(".buttons").style.display = "none"; // ❌ hide
     startSlideshow();
   } 
   else if (current === 9) {
     document.getElementById("endingPage").style.display = "block";
-    document.querySelector(".buttons").style.display = "none"; // ❗ hide here
+    document.querySelector(".buttons").style.display = "none"; // ❌ hide
   } 
   else {
     document.querySelector(".buttons").style.display = "none";
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
+      }
     
     setInterval(() => {
       let heart = document.createElement("div");
