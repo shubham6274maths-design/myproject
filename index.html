@@ -3,6 +3,27 @@
 <head>
   <title>For Jennie ❤️</title>
   <style>
+    .heartbeat {
+  animation: heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.08); }
+  40% { transform: scale(1); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+    body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(255,107,129,0.15), transparent 70%);
+  pointer-events: none;
+}
     /* FULL SCREEN SLIDESHOW */
 .slideshow {
   position: fixed;
@@ -589,6 +610,10 @@ You’re my choice.
 My peace.
 Something I truly value ❤️</p>
     </div>
+      <div id="pausePage" class="msg">
+  <h1>Wait… ❤️</h1>
+  <p>Before you see this… just know one thing</p>
+</div>
       <div id="finalPage" class="msg final">
 
   <div class="slideshow">
@@ -604,7 +629,10 @@ Something I truly value ❤️</p>
     <div class="slide" style="background-image: url('Snapchat-313158135.jpg');">
       <div class="overlay">My beautiful angel… you're perfect in every way 🫂</div>
     </div>
-
+<div id="endingPage" class="msg">
+  <h1>Stay with me… forever? 💗</h1>
+  <button onclick="finalYes()">Yes ❤️</button>
+</div>
   </div>
 
       </div>
@@ -622,6 +650,27 @@ Something I truly value ❤️</p>
   </audio>
 
   <script>
+    function finalYes() {
+  document.body.innerHTML = `
+    <h1 style="text-align:center;margin-top:40vh;">
+      I love you forever ❤️
+    </h1>
+  `;
+}
+    function typeParagraph(text, elementId, speed = 25) {
+  let i = 0;
+  let el = document.getElementById(elementId);
+  el.innerHTML = "";
+
+  function typing() {
+    if (i < text.length) {
+      el.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
     function prev() {
   if (current > 1) {
     let currentMsg = document.getElementById("message" + current);
@@ -662,19 +711,20 @@ noBtn.addEventListener("touchstart", moveNoBtn);
   document.getElementById("message1").style.display = "block";
 
   typeWriter();
+typeParagraph(`Do you remember when we first talked?...`, "msg1Text");
+      let music = document.getElementById("bgMusic");
+music.volume = 0;
+music.play();
 
-  let music = document.getElementById("bgMusic");
-
-  // FORCE play properly
-  music.muted = false;
-  music.play().catch(() => {
-    // if blocked, try again on next click
-    document.body.addEventListener("click", () => {
-      music.play();
-    }, { once: true });
-  });
-    }
-
+let vol = 0;
+let fade = setInterval(() => {
+  if (vol < 1) {
+    vol += 0.05;
+    music.volume = vol;
+  } else {
+    clearInterval(fade);
+  }
+}, 200);
     let text = "Hey Jennie ❤️";
     let i = 0;
     function typeWriter() {
@@ -702,7 +752,15 @@ function next() {
   document.getElementById("finalPage").style.display = "block";
   document.querySelector(".buttons").style.display = "none";
   document.getElementById("typing").style.display = "none";
+else if (current === 7) {
+  document.getElementById("pausePage").style.display = "block";
 
+  setTimeout(() => {
+    document.getElementById("pausePage").style.display = "none";
+    document.getElementById("finalPage").style.display = "block";
+    startSlideshow();
+  }, 3000);
+}
   // 🔥 animate images one by one
   let imgs = document.querySelectorAll(".gallery img");
   imgs.forEach((img, i) => {
