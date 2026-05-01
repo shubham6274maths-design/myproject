@@ -3,37 +3,6 @@
 <head>
   <title>For Jennie ❤️</title>
   <style>
-    .slideshow {
-  z-index: 10;
-}
-
-#navButtons {
-  position: relative;
-  z-index: 1;
-}
-    .msg {
-  transition: opacity 0.5s ease;
-}
-    .buttons {
-  display: none; /* hidden initially */
-  position: fixed;
-  bottom: 20px;
-  width: 100%;
-  text-align: center;
-    }
-    #pausePage, #endingPage {
-  text-align: center;
-  padding: 40px;
-}
-
-#endingPage button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  border-radius: 25px;
-  background: #ff6b81;
-  color: white;
-  border: none;
-}
     /* FULL SCREEN SLIDESHOW */
 .slideshow {
   position: fixed;
@@ -620,11 +589,8 @@ You’re my choice.
 My peace.
 Something I truly value ❤️</p>
     </div>
-      <div id="pausePage" class="msg">
-  <h1>And after everything…</h1>
-  <p>I still choose you. Every single time ❤️</p>
-</div>
       <div id="finalPage" class="msg final">
+
   <div class="slideshow">
 
     <div class="slide active" style="background-image: url('IMG_20260430_132030.png');">
@@ -640,18 +606,10 @@ Something I truly value ❤️</p>
     </div>
 
   </div>
-</div>
-
-<!-- ✅ MOVE THIS OUTSIDE -->
-<div id="endingPage" class="msg">
-  <h1>So… will you stay with me? 💗</h1>
-  <button onclick="finalYes()">Yes ❤️</button>
-</div>
-  </div>
 
       </div>
 
-      <div class="buttons" id="navButtons" style="display:none;">
+      <div class="buttons">
   <button onclick="prev()">⬅️ Previous</button>
   <button onclick="next()">Next ❤️</button>
       </div>
@@ -665,26 +623,17 @@ Something I truly value ❤️</p>
 
   <script>
     function prev() {
-  if (current <= 1) return;
+  if (current > 1) {
+    let currentMsg = document.getElementById("message" + current);
+    currentMsg.style.display = "none";
 
-  // hide current screen
-  if (current <= 6) {
-    document.getElementById("message" + current).style.display = "none";
-  }
-  if (current === 7) document.getElementById("pausePage").style.display = "none";
-  if (current === 8) document.getElementById("finalPage").style.display = "none";
-  if (current === 9) document.getElementById("endingPage").style.display = "none";
+    current--;
 
-  current--;
+    let prevMsg = document.getElementById("message" + current);
+    prevMsg.style.display = "block";
 
-  // show correct previous
-  if (current <= 6) {
-    document.getElementById("message" + current).style.display = "block";
-    document.getElementById("navButtons").style.display = "block";
-  }
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
-    }
     // show typing again if going back
     document.getElementById("typing").style.display = "block";
   }
@@ -710,23 +659,16 @@ noBtn.addEventListener("touchstart", moveNoBtn);
   document.getElementById("intro").style.display = "none";
   document.getElementById("mainContent").style.display = "block";
 
-  current = 1;
-
   document.getElementById("message1").style.display = "block";
 
-  // ✅ show nav buttons ONLY after intro
-  document.getElementById("navButtons").style.display = "block";
-
-  // ✅ typing only once
-  document.getElementById("typing").style.display = "block";
-  document.getElementById("typing").innerHTML = "";
-  i = 0;
   typeWriter();
 
-  // 🎵 music fix
   let music = document.getElementById("bgMusic");
+
+  // FORCE play properly
   music.muted = false;
   music.play().catch(() => {
+    // if blocked, try again on next click
     document.body.addEventListener("click", () => {
       music.play();
     }, { once: true });
@@ -742,10 +684,11 @@ noBtn.addEventListener("touchstart", moveNoBtn);
         setTimeout(typeWriter, 80);
       }
     }
-let current = 1;
 
+    let current = 1;
 function next() {
   let currentMsg = document.getElementById("message" + current);
+
   if (currentMsg) currentMsg.style.display = "none";
 
   current++;
@@ -754,39 +697,23 @@ function next() {
 
   if (nextMsg) {
     nextMsg.style.display = "block";
-
-    // typing only on first pages
-    document.getElementById("typing").style.display = "block";
-  }
-
-  else if (current === 7) {
-    document.getElementById("pausePage").style.display = "block";
-
-    // ❌ hide typing
-    document.getElementById("typing").style.display = "none";
-  }
-
-  else if (current === 8) {
-    document.getElementById("pausePage").style.display = "none";
-    document.getElementById("finalPage").style.display = "block";
-
-    // ❌ hide buttons on slideshow
-    document.getElementById("navButtons").style.display = "none";
-
     startSlideshow();
-  }
+  } else {
+  document.getElementById("finalPage").style.display = "block";
+  document.querySelector(".buttons").style.display = "none";
+  document.getElementById("typing").style.display = "none";
 
-  else if (current === 9) {
-    document.getElementById("finalPage").style.display = "none";
-    document.getElementById("endingPage").style.display = "block";
-
-    // ❌ still hide buttons
-    document.getElementById("navButtons").style.display = "none";
-  }
-
+  // 🔥 animate images one by one
+  let imgs = document.querySelectorAll(".gallery img");
+  imgs.forEach((img, i) => {
+    setTimeout(() => {
+      img.classList.add("show");
+    }, i * 500);
+  });
+}
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-    
+
     setInterval(() => {
       let heart = document.createElement("div");
       heart.className = "heart";
@@ -796,13 +723,9 @@ function next() {
       setTimeout(() => heart.remove(), 6000);
     }, 400);
     // SLIDESHOW LOOP
-let slides;
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slide");
 
-function startSlideshow() {
-  slides = document.querySelectorAll(".slide");
-  slideIndex = 0;
-  showSlides();
-}
 function showSlides() {
   slides.forEach(slide => slide.classList.remove("active"));
 
@@ -818,10 +741,6 @@ function showSlides() {
 function startSlideshow() {
   slideIndex = 0;
   showSlides();
-}
-    function finalYes() {
-  document.getElementById("endingPage").innerHTML =
-    "<h1>I knew it… ❤️</h1><p>I’m the luckiest person alive.</p>";
 }
   </script>
 </body>
