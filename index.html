@@ -3,6 +3,12 @@
 <head>
   <title>For Jennie ❤️</title>
   <style>
+    .buttons {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
     #pausePage, #endingPage {
   text-align: center;
   padding: 40px;
@@ -711,13 +717,15 @@ noBtn.addEventListener("touchstart", moveNoBtn);
 let current = 1;
 
 function next() {
-  // hide all pages first
+  document.getElementById("typing").style.display = "none";
+
   document.querySelectorAll(".msg").forEach(el => el.style.display = "none");
 
   current++;
-if (current > 1) {
-  document.getElementById("typing").style.display = "none";
-    }
+
+  // 👉 SHOW buttons by default
+  document.querySelector(".buttons").style.display = "block";
+
   if (current <= 6) {
     document.getElementById("message" + current).style.display = "block";
   } 
@@ -726,10 +734,12 @@ if (current > 1) {
   } 
   else if (current === 8) {
     document.getElementById("finalPage").style.display = "block";
+    document.querySelector(".buttons").style.display = "none"; // ❗ hide here
     startSlideshow();
   } 
   else if (current === 9) {
     document.getElementById("endingPage").style.display = "block";
+    document.querySelector(".buttons").style.display = "none"; // ❗ hide here
   } 
   else {
     document.querySelector(".buttons").style.display = "none";
