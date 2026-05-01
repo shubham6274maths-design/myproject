@@ -3,6 +3,17 @@
 <head>
   <title>For Jennie ❤️</title>
   <style>
+    .slideshow {
+  z-index: 10;
+}
+
+#navButtons {
+  position: relative;
+  z-index: 1;
+}
+    .msg {
+  transition: opacity 0.5s ease;
+}
     .buttons {
   display: none; /* hidden initially */
   position: fixed;
@@ -640,7 +651,7 @@ Something I truly value ❤️</p>
 
       </div>
 
-      <div class="buttons">
+      <div class="buttons" id="navButtons" style="display:none;">
   <button onclick="prev()">⬅️ Previous</button>
   <button onclick="next()">Next ❤️</button>
       </div>
@@ -656,17 +667,20 @@ Something I truly value ❤️</p>
     function prev() {
   if (current <= 1) return;
 
-  document.querySelectorAll(".msg").forEach(el => el.style.display = "none");
+  // hide current screen
+  if (current <= 6) {
+    document.getElementById("message" + current).style.display = "none";
+  }
+  if (current === 7) document.getElementById("pausePage").style.display = "none";
+  if (current === 8) document.getElementById("finalPage").style.display = "none";
+  if (current === 9) document.getElementById("endingPage").style.display = "none";
 
   current--;
 
+  // show correct previous
   if (current <= 6) {
     document.getElementById("message" + current).style.display = "block";
-    document.querySelector(".buttons").style.display = "block";
-  } 
-  else if (current === 7) {
-    document.getElementById("pausePage").style.display = "block";
-    document.querySelector(".buttons").style.display = "block";
+    document.getElementById("navButtons").style.display = "block";
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -696,12 +710,20 @@ noBtn.addEventListener("touchstart", moveNoBtn);
   document.getElementById("intro").style.display = "none";
   document.getElementById("mainContent").style.display = "block";
 
+  current = 1;
+
   document.getElementById("message1").style.display = "block";
 
-  document.querySelector(".buttons").style.display = "block"; // ✅ show here
+  // ✅ show nav buttons ONLY after intro
+  document.getElementById("navButtons").style.display = "block";
 
+  // ✅ typing only once
+  document.getElementById("typing").style.display = "block";
+  document.getElementById("typing").innerHTML = "";
+  i = 0;
   typeWriter();
 
+  // 🎵 music fix
   let music = document.getElementById("bgMusic");
   music.muted = false;
   music.play().catch(() => {
@@ -723,35 +745,47 @@ noBtn.addEventListener("touchstart", moveNoBtn);
 let current = 1;
 
 function next() {
-  document.getElementById("typing").style.display = "none";
-
-  document.querySelectorAll(".msg").forEach(el => el.style.display = "none");
+  let currentMsg = document.getElementById("message" + current);
+  if (currentMsg) currentMsg.style.display = "none";
 
   current++;
 
-  if (current <= 6) {
-    document.getElementById("message" + current).style.display = "block";
-    document.querySelector(".buttons").style.display = "block"; // ✅ visible
-  } 
+  let nextMsg = document.getElementById("message" + current);
+
+  if (nextMsg) {
+    nextMsg.style.display = "block";
+
+    // typing only on first pages
+    document.getElementById("typing").style.display = "block";
+  }
+
   else if (current === 7) {
     document.getElementById("pausePage").style.display = "block";
-    document.querySelector(".buttons").style.display = "block"; // ✅ still visible
-  } 
+
+    // ❌ hide typing
+    document.getElementById("typing").style.display = "none";
+  }
+
   else if (current === 8) {
+    document.getElementById("pausePage").style.display = "none";
     document.getElementById("finalPage").style.display = "block";
-    document.querySelector(".buttons").style.display = "none"; // ❌ hide
+
+    // ❌ hide buttons on slideshow
+    document.getElementById("navButtons").style.display = "none";
+
     startSlideshow();
-  } 
+  }
+
   else if (current === 9) {
+    document.getElementById("finalPage").style.display = "none";
     document.getElementById("endingPage").style.display = "block";
-    document.querySelector(".buttons").style.display = "none"; // ❌ hide
-  } 
-  else {
-    document.querySelector(".buttons").style.display = "none";
+
+    // ❌ still hide buttons
+    document.getElementById("navButtons").style.display = "none";
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+}
     
     setInterval(() => {
       let heart = document.createElement("div");
