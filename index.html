@@ -607,7 +607,6 @@ Something I truly value ❤️</p>
   <p>I still choose you. Every single time ❤️</p>
 </div>
       <div id="finalPage" class="msg final">
-
   <div class="slideshow">
 
     <div class="slide active" style="background-image: url('IMG_20260430_132030.png');">
@@ -621,6 +620,11 @@ Something I truly value ❤️</p>
     <div class="slide" style="background-image: url('Snapchat-313158135.jpg');">
       <div class="overlay">My beautiful angel… you're perfect in every way 🫂</div>
     </div>
+
+  </div>
+</div>
+
+<!-- ✅ MOVE THIS OUTSIDE -->
 <div id="endingPage" class="msg">
   <h1>So… will you stay with me? 💗</h1>
   <button onclick="finalYes()">Yes ❤️</button>
@@ -707,35 +711,26 @@ noBtn.addEventListener("touchstart", moveNoBtn);
 let current = 1;
 
 function next() {
-  let currentMsg = document.getElementById("message" + current);
-  if (currentMsg) currentMsg.style.display = "none";
+  // hide all pages first
+  document.querySelectorAll(".msg").forEach(el => el.style.display = "none");
 
   current++;
-
-  let nextMsg = document.getElementById("message" + current);
-
-  if (nextMsg) {
-    nextMsg.style.display = "block";
-  }
-
-  // 👉 After last message (message6)
+if (current > 1) {
+  document.getElementById("typing").style.display = "none";
+    }
+  if (current <= 6) {
+    document.getElementById("message" + current).style.display = "block";
+  } 
   else if (current === 7) {
     document.getElementById("pausePage").style.display = "block";
-  }
-
-  // 👉 After pause → show slideshow
+  } 
   else if (current === 8) {
-    document.getElementById("pausePage").style.display = "none";
     document.getElementById("finalPage").style.display = "block";
     startSlideshow();
-  }
-
-  // 👉 After slideshow → show ending
+  } 
   else if (current === 9) {
-    document.getElementById("finalPage").style.display = "none";
     document.getElementById("endingPage").style.display = "block";
-  }
-
+  } 
   else {
     document.querySelector(".buttons").style.display = "none";
   }
@@ -752,9 +747,13 @@ function next() {
       setTimeout(() => heart.remove(), 6000);
     }, 400);
     // SLIDESHOW LOOP
-let slideIndex = 0;
-const slides = document.querySelectorAll(".slide");
+let slides;
 
+function startSlideshow() {
+  slides = document.querySelectorAll(".slide");
+  slideIndex = 0;
+  showSlides();
+}
 function showSlides() {
   slides.forEach(slide => slide.classList.remove("active"));
 
